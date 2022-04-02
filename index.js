@@ -33,7 +33,7 @@ passport.use(passportMiddleware);
 
 //------------------------------------------------ Inicio Configuraciones -----------------------------------------------
 
-app.set('appName', 'BETFOOBALL'); //De esta forma se crean variables
+app.set('appName', 'IPS'); //De esta forma se crean variables
 app.set('port', appConfig.port || 4000); //Asigna el puerto que venga en config y si esta ocupado asigneme otro
 
 // app.use(express.static(path.join(__dirname, 'public')));  //Siempre nuestros directorio publico va a hacer public
@@ -50,6 +50,6 @@ app.use(indexRoutes);
 
 app.listen(app.get("port"), () => {
     console.log(app.get('appName'));
-    console.log('Aplicacion de BETSOLVER corriendo en el puerto '+ app.get("port"));
+    console.log('Aplicacion de IPS corriendo en el puerto '+ app.get("port"));
 })  
 
