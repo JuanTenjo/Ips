@@ -5,7 +5,7 @@ const model = {};
 model.registerUser = async (params) => {
     try {
 
-        let query = `INSERT INTO usuarios(idRol,codiPais,nombre,apellidos,email,password,genero,celular) Values('${params.idRol}','${params.codiPais}','${params.nombre}','${params.apellidos}','${params.email}','${params.password}','${params.genero}','${params.celular}')`
+        let query = `INSERT INTO usuario(idRol,username,email,password) Values('${params.idRol}','${params.username}','${params.email}','${params.password}')`
 
         const InsertUser = await pool.query(query);
 
