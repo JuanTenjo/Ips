@@ -16,7 +16,7 @@ model.ValidarPais = async (CodiPais) => {
 };
 
 model.ValidarCorreo = async function (correo) {
-  const sql = `Select count(email) as Existe FROM usuarios WHERE email = '${correo}'`;
+  const sql = `Select count(email) as Existe FROM usuario WHERE email = '${correo}'`;
   const result = await pool.query(sql);
   if (result[0].Existe > 0) {
     return true;
@@ -27,7 +27,7 @@ model.ValidarCorreo = async function (correo) {
 
 model.ValidarUser = async function (email) {
   try {
-    const sql = `SELECT idUsuarios,idRol,nombre,apellidos,email,genero,password,usuario FROM usuarios where email = '${email}'`;
+    const sql = `SELECT idUsuario,idRol,username,email,password FROM usuario where email = '${email}'`;
 
     const result = await pool.query(sql);
 
