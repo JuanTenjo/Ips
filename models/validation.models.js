@@ -41,8 +41,8 @@ model.ValidarUser = async function (email) {
 };
 
 model.findUserById = async function (data) {
-  const sql = `SELECT * FROM usuarios where idUsuarios = ${data.id}`;
-  const result = pool.query(sql);
+  const sql = `SELECT * FROM usuario where email = '${data.email}'`;
+  const result = await pool.query(sql);
   return result;
 };
 

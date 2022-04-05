@@ -20,11 +20,11 @@ controller.registerUser = async function (req, res) {
         await validarNulo(params.idRol) ?  ErroresValidacion.push('El Rol del usuario no puede estar vacio') : true;  
         await validarNulo(params.username) ?  ErroresValidacion.push('El username del usuario no puede estar vacio') : true;  
         await ValidarCorreo(params.email) ? ErroresValidacion.push(`El correo ${params.email} ya esta registrado`) : true;
-        await patternPassword(params.password) == false ? ErroresValidacion.push("El campo contraseña necesita Mayusculas, minusculas y numeros") : true;
+        //await patternPassword(params.password) == false ? ErroresValidacion.push("El campo contraseña necesita Mayusculas, minusculas y numeros") : true;
 
         !validator.validate(params.email) ? ErroresValidacion.push('Email invalido') : true;
       
-        if(params.password){        
+  /*       if(params.password){        
             (params.password.length > 20 || params.password.length < 6) ? ErroresValidacion.push("La contraseña que ingreso es mayor a 20 caracteres o menor a 6 caracteres") : true;
     
             while (!espacios && (cont < params.password.length)) {
@@ -35,7 +35,7 @@ controller.registerUser = async function (req, res) {
 
             espacios ? ErroresValidacion.push("La contraseña no puede contener espacios en blanco") : true;
         } 
-    
+     */
         if (ErroresValidacion.length != 0){
             
             res.status(400).json({"message": ErroresValidacion});
