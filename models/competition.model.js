@@ -43,23 +43,7 @@ model.register = async (params) => {
     }
 }
 
-model.traerUltimoID = async () => {
-    try {
 
-        let query = `SELECT MAX(idCompeticiones) AS MaxID FROM competencias`
-
-        const result = await pool.query(query);
-    
-        return result[0].MaxID;
-
-    } catch (err) {
-        return {
-            error: true,
-            mensaje:[ `Hubo un error al traer el ultimo id del la competicion el Model: comptetition.model, en la funcion: traerUltimoID. ERROR: ${err.sqlMessage} `],
-            respuesta: false
-        };
-    }
-}
 
 model.registerEstrategias = async (estrategias,IDCompeticion) => {
     try {

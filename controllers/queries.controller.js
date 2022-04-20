@@ -1,4 +1,4 @@
-const {showQueriesUsers,queriesUsers, updateQueriesUser, registerQueriesUser} = require('../models/queries.model')
+const {showQueriesUsers,queriesUsers, updateQueriesUser, traerUltimoId, registrarPago, registerQueriesUser} = require('../models/queries.model')
 const {validarNulo, patternString} = require('../utils/validationPatters')
 
 
@@ -21,7 +21,8 @@ controller.registerQueriesUser = async function (req, res) {
     await validarNulo(params.sintomas) ? ErroresValidacion.push(`El sintoma es requeridad`) : true;
     await validarNulo(params.descripcion) ? ErroresValidacion.push(`La descripcion es requeridad`) : true;
     await validarNulo(params.asistio) ? ErroresValidacion.push(`La asistencia es requeridad`) : true;
-    await validarNulo(params.fechaconsulta) ? ErroresValidacion.push(`La Fecha consulta es requeridad`) : true;
+    await validarNulo(params.fechaconsulta) ? ErroresValidacion.push(`La Fecha consulta es requerida`) : true;
+    await validarNulo(params.valor) ? ErroresValidacion.push(`El valor de la consulta es requerida`) : true;
     await params.examen1 ? ErroresValidacion.push(`La Fecha consulta es requeridad`) : true;
     await params.examen2 ? ErroresValidacion.push(`La Fecha consulta es requeridad`) : true;
     await params.examen3 ? ErroresValidacion.push(`La Fecha consulta es requeridad`) : true;
@@ -34,7 +35,23 @@ controller.registerQueriesUser = async function (req, res) {
             res.status(400).json({"message": estado.mensaje ? estado.mensaje : "No se registro la consulta del  usuario" });
             return;
         }
+
+        const ultiId = await traerUltimoId();
+
+        if(ultiId == null || undefined){
+            return;
+        }
+
+        const estadoPago = await registrarPago(ultiId, params.valor);
+
+        if(estadoPago.error || estadoPago === false){
+            res.status(400).json({"message": estado.mensaje ? estado.mensaje : "No se registro la consulta del  usuario" });
+            return;
+        }
+
         res.status(200).json({"message": "Registro Exitoso"});  
+        
+    
     }
 };
 

@@ -21,6 +21,44 @@ model.registerQueriesUser = async (params) => {
 }
 
 
+model.traerUltimoId = async () => {
+    try {
+
+        let query = `SELECT MAX(idConsulta) AS MaxID FROM consulta`
+
+        const result = await pool.query(query);
+    
+        return result[0].MaxID;
+
+    } catch (err) {
+        return {
+            error: true,
+            mensaje:[ `Hubo un error al traer el ultimo id del la consulta el Model: comptetition.model, en la funcion: traerUltimoID. ERROR: ${err.sqlMessage} `],
+            respuesta: false
+        };
+    }
+}
+
+model.registrarPago = async (ultiId, valor) => {
+    try {
+
+        let query = `INSERT INTO pago(idConsulta,valor) VALUES(${ultiId}, ${valor})`
+
+        const result = await pool.query(query);
+    
+        return result;
+
+    } catch (err) {
+        return {
+            error: true,
+            mensaje:[ `Hubo un error al traer el ultimo id del la consulta el Model: queries.model, en la funcion: registrarPago. ERROR: ${err.sqlMessage} `],
+            respuesta: false
+        };
+    }
+}
+
+
+
 model.updateQueriesUser = async (params) => {
     try {
 

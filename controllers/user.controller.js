@@ -159,7 +159,6 @@ controller.users = async function(req, res) {
 
 };
 
-
 controller.roles = async function(req, res) {
 
     if(req.user[0].idRol === 3){
