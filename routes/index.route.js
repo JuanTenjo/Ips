@@ -7,6 +7,7 @@ const queries = require('./queries.route');
 
 router.use('/auth', AuthRoutes);
 router.use('/user', UserRoutes);
+
 router.use('/paciente', PacienteRoutes);
 router.use('/competition', CompetitionRoutes);
 router.use('/queries', queries)
