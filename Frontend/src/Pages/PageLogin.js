@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, makeStyles, Hidden } from "@material-ui/core";
+import { Grid, makeStyles, Hidden, FormHelperText } from "@material-ui/core";
 import LoginForm from "../Components/Login/LoginForm";
 import RegisterForm from "../Components/Login/RegisterForm";
 import Banner from "../assets/Banner.jpg";
@@ -19,6 +19,11 @@ const useStyles = makeStyles(() => ({
   },
   margenSuperior: {
     marginTop: "20%",
+  },
+  image:{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 }));
 
@@ -128,7 +133,7 @@ const PageLogin = ({ Auth }) => {
 
         {response && Auth()}
 
-        <Grid item md={6}>
+        <Grid item md={6} className={styles.image}>
 
           <Hidden smDown>
              
