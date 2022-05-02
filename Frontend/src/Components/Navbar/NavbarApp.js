@@ -37,7 +37,7 @@ const NavBar = ({accionAbrir}) => {
                     <MenuIcon />
                 </IconButton>
                 <Typography variant="h6" className={styles.title}>
-                    BetSolver
+                    IPS
                 </Typography>
                 {/* <Button variant="text" color="inherit">
                     Login

@@ -30,16 +30,16 @@ const Listas = (props) => {
         onClick: () => history.push("/") 
       },
       {
-        text: "Gestionar Usuarios",
+        text: "Consultas",
         icon: <PlaylistAddIcon />,
         onClick: () => history.push("/gestionUser")
       },
       {
-        text: "Gestionar Equipos",
+        text: "Agendar cita",
         icon: <PlaylistAddIcon />,
         onClick: () => history.push("/gestionTeam")
       },
-      {
+     /* {
         text: "Gestionar Ligas",
         icon: <PlaylistAddIcon />,
         onClick: () => history.push("/gestionLeague")
@@ -58,7 +58,7 @@ const Listas = (props) => {
         text: "Gestionar paises",
         icon: <PlaylistAddIcon />,
         onClick: () => history.push("/gestionPais")
-      },
+      },*/
       {
         text: "Salir",
         icon: <ExitToAppIcon />,
