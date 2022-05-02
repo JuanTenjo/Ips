@@ -53,7 +53,7 @@ const PageLogin = ({ Auth }) => {
       setResponse(res.message);
       setTimeout(() => {
         setResponse(false);
-      }, 5000);
+      }, 500);
     } else {
       let errores = { errores: res.message };
       setError(errores);
@@ -74,8 +74,8 @@ const PageLogin = ({ Auth }) => {
 
         const res = await helpHttpAxios().post(BaseUrl, config);
         if (!res.err) {
-
-            if (res.rol === 3) {
+          console.log(res);
+            if (res.rol !== null) {
 
                 window.localStorage.setItem("LoggedAppUser", JSON.stringify(res.token))
 

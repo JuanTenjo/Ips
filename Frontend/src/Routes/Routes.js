@@ -39,7 +39,7 @@ const RoutesLogged = ({ nombreUser, rolUser}) => {
 
     <div className={classes.root}>
 
-      {rolUser !== 3 ?  
+      {rolUser == null ?  
 
         <Switch>
           <PrivateRoute exact path="/" component={Home} />
@@ -55,16 +55,17 @@ const RoutesLogged = ({ nombreUser, rolUser}) => {
           <Hidden smUp>
             <Cajon variant="temporary" nombreUser={nombreUser} open={abrir} onClose={AccionAbrir} />
           </Hidden>
-
-
           <Switch>
-           
-            <Route exact path="/gestionParley" component={PageParley} />
-            <Route exact path="/gestionPais" component={PagePais} />
-            <Route exact path="/gestionCompetition" component={PageCompetition} />
-            <Route exact path="/gestionTeam" component={PageTeam} />
+          <Route exact path="/gestionTeam" component={PageTeam} />
             <Route exact path="/gestionUser" component={PageUser} />
-            <Route exact path="/gestionLeague" component={PageLeague} />
+            {/*
+              <Route exact path="/gestionParley" component={PageParley} />
+              <Route exact path="/gestionPais" component={PagePais} />
+              <Route exact path="/gestionCompetition" component={PageCompetition} />
+            
+              <Route exact path="/gestionLeague" component={PageLeague} />*/
+            }
+            
             {/* <Route exact path="/gestionUser" render={props => <GestionUserApp {...props} />} /> */}
             <PrivateRoute exact path="/" component={Home} />
 
@@ -75,11 +76,6 @@ const RoutesLogged = ({ nombreUser, rolUser}) => {
           </Switch>
         </>
       }
-
-
-     
-      
-
     </div>
   );
 };
