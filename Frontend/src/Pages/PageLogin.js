@@ -6,6 +6,7 @@ import Banner from "../assets/Banner.jpg";
 import Message from "../Components/Necesarios/Message";
 import { helpHttpAxios } from "../Helpers/helpHttpsAxios";
 import API from "../Utils/dominioBackend";
+import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -31,6 +32,7 @@ const PageLogin = ({ Auth }) => {
 
     const styles = useStyles();
     const [response, setResponse] = useState(null);
+    const [success, setSuccess] = useState("");
     const [funcion, setFuncion] = useState(0);
     const [error, setError] = useState({});
 
@@ -51,6 +53,7 @@ const PageLogin = ({ Auth }) => {
 
     if (!res.err) {
       setResponse(res.message);
+      setSuccess("Registro existoso");
       setTimeout(() => {
         setResponse(false);
       }, 500);
@@ -118,9 +121,10 @@ const PageLogin = ({ Auth }) => {
             </div>
 
             :
-
+            <>
             <RegisterForm handleFuncion={handleFuncion} createData={createData} />
-            
+            {success&&(<Alert severity="success">{success}</Alert>)}
+            </>
           }
 
         {error.errores &&
