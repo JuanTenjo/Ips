@@ -35,30 +35,20 @@ const Listas = (props) => {
         onClick: () => history.push("/gestionUser")
       },
       {
-        text: "Agendar cita",
+        text: "Agregar Consulta",
+        icon: <PlaylistAddIcon />,
+        onClick: () => history.push("/gestionUser")
+      },
+      {
+        text: "Agregar Paciente",
         icon: <PlaylistAddIcon />,
         onClick: () => history.push("/gestionTeam")
       },
-     /* {
-        text: "Gestionar Ligas",
-        icon: <PlaylistAddIcon />,
-        onClick: () => history.push("/gestionLeague")
-      },
       {
-        text: "Gestionar Competencias",
+        text: "Usuarios",
         icon: <PlaylistAddIcon />,
-        onClick: () => history.push("/gestionCompetition")
+        onClick: () => history.push("/gestionTeam")
       },
-      {
-        text: "Gestionar Parleys",
-        icon: <PlaylistAddIcon />,
-        onClick: () => history.push("/gestionParley")
-      },
-      {
-        text: "Gestionar paises",
-        icon: <PlaylistAddIcon />,
-        onClick: () => history.push("/gestionPais")
-      },*/
       {
         text: "Salir",
         icon: <ExitToAppIcon />,

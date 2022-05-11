@@ -144,7 +144,7 @@ const PageLogin = ({ Auth }) => {
             <center>
               <img
                 src={Banner}
-                alt="Banner Bet Solver"
+                alt="Banner IPS"
                 className={styles.Banner}
               />
             </center>
