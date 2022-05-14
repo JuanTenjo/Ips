@@ -125,7 +125,10 @@ const FormUser = ({ dataToEdit, setDataToEdit, createData, updateData }) => {
   useEffect(() => {
     const traerPais = async () => {
       const data = await helpHttpAxios().get(`${API.URI}/country`);
-      setDataPaises(data);
+      if(data != null){
+        setDataPaises(data);
+      }
+     
     };
 
     const traerRoles = async () => {
