@@ -58,22 +58,12 @@ controller.registerUser = async function (req, res) {
 
 controller.updateUser = async function(req, res) {
 
-    if(req.user[0].idRol === 3){
+    if(req.user[0].tipoRol === "Admin"){
 
         const params = req.body;   
     
         const ErroresValidacion = [];
 
-        !validator.validate(params.email) ? ErroresValidacion.push('Email invalido') : true;
-        isNaN(params.celular) ?  ErroresValidacion.push("El campo celular solo acepta numeros") : true;
-        (params.nombre.length > 45 || params.nombre.length < 5) ? ErroresValidacion.push("El campo nombre es mayor a 45 caracteres o menor a 5 caracteres") : true;
-        (params.apellidos.length > 45 || params.apellidos.length < 4) ? ErroresValidacion.push("El campo apellido es mayor a 45 caracteres o menor 4 caracteres") : true;
-        (params.genero == "Masculino" || params.genero == "Femenino") ? true : ErroresValidacion.push("El campo genero solo acepta Masculino o Femenino");
-        await validarNulo(params.idRol) ?  ErroresValidacion.push('El Rol del usuario no puede estar vacio') : true;  
-        await validarNulo(params.idUsuarios) ? ErroresValidacion.push("El ID del usuario no puede estar vacio") : true;
-        await ValidarPais(params.codiPais) == false ? ErroresValidacion.push("Codigo del pais invalido") : true;
-        await patternString(params.nombre) == false ? ErroresValidacion.push("El campo nombre solo acepta letras") : true;
-        await patternString(params.apellidos) == false ? ErroresValidacion.push("El campo apellido solo acepta letras") : true;
         
         if (ErroresValidacion.length != 0){
             
@@ -139,7 +129,7 @@ controller.deleteUser = async function(req, res) {
 
 controller.users = async function(req, res) {
 
-    if(req.user[0].idRol === 3){
+    if(req.user[0].tipoRol === 'Admin'){
 
         const estado = await users();
 

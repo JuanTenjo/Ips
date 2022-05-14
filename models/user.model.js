@@ -120,8 +120,7 @@ model.traerUltimoIDUsuario = async () => {
 model.updateUser = async (params) => {
     try {
 
-        let query = `UPDATE usuarios SET codiPais = '${params.codiPais}', idRol = '${params.idRol}', nombre = '${params.nombre}', email = '${params.email}', apellidos = '${params.apellidos}'
-        , genero = '${params.genero}', celular = '${params.celular}' WHERE idUsuarios = ${params.idUsuarios}`
+        let query = `UPDATE usuario SET idRol = '${params.idRol}', username = '${params.username}', email = '${params.email}' WHERE idUsuario = ${params.idUsuario}`
 
         const UpdateUser = await pool.query(query);
 
@@ -161,8 +160,7 @@ model.deleteUser = async (ID) => {
 model.users = async (ID) => {
     try {
 
-        let query = `SELECT idUsuarios, usuarios.idRol, roles.Nombre as NombreRol, usuarios.CodiPais, paises.nombrePais, usuarios.nombre, apellidos, email, genero, usuario, celular, usuarios.habilitado 
-		FROM usuarios inner join roles on usuarios.idRol = roles.idRol inner join paises on paises.codiPais = usuarios.CodiPais  `
+        let query = `SELECT * FROM usuario `
 
         const Users = await pool.query(query);
 

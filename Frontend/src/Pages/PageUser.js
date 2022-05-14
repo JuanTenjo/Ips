@@ -32,7 +32,7 @@ const PageUser = () => {
 
   const traerUsuarios = async () => {
     setLoading(true);       
-    const data = await helpHttpAxios().get(`${API.URI}/user`);                                                                                                                
+    const data = await helpHttpAxios().get(`${API.URI}/user/`);                                                                                                                
     setDataUsuarios(data);
     setLoading(false);
   };
