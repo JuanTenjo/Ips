@@ -15,7 +15,8 @@ controller.login = async function (req, res) {
         res.status(200).json({     
           msg: "Inicio sessión correctamente",
           rol: user.idRol,
-          token : createToken({id: user.idUsuarios, username: user.usuario, email: user.email }),
+          tipoRol:user.tipoRol,
+          token : createToken({id: user.idUsuarios, username: user.usuario, email: user.email,tipoRol:user.tipoRol }),
           });
       } else {
 

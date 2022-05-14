@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     toolbar: theme.mixins.toolbar,
 }))
 
-const Cajon = ({variant,open,onClose,nombreUser}) => {
+const Cajon = ({variant,open,onClose,nombreUser,tipoRol}) => {
 
     const classes = useStyles();
     return (    
@@ -43,7 +43,7 @@ const Cajon = ({variant,open,onClose,nombreUser}) => {
         </div>
         <Divider/>
 
-        <Listas/>
+        <Listas tipoRol={tipoRol}/>
 
         </Drawer>
      );

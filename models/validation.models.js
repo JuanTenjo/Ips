@@ -27,7 +27,7 @@ model.ValidarCorreo = async function (correo) {
 
 model.ValidarUser = async function (email) {
   try {
-    const sql = `SELECT idUsuario,idRol,username,email,password FROM usuario where email = '${email}'`;
+    const sql = `SELECT usuario.idUsuario,usuario.idRol,usuario.username,usuario.email,usuario.password,rol.tipoRol FROM usuario inner join rol on usuario.idRol=rol.idRol where email = '${email}'`;
 
     const result = await pool.query(sql);
 
@@ -41,7 +41,8 @@ model.ValidarUser = async function (email) {
 };
 
 model.findUserById = async function (data) {
-  const sql = `SELECT * FROM usuario where email = '${data.email}'`;
+  const sql = `SELECT usuario.idUsuario,usuario.idRol,usuario.username,usuario.email,usuario.password,rol.tipoRol FROM usuario inner join rol on usuario.idRol=rol.idRol where email = '${data.email}'`;
+  
   const result = await pool.query(sql);
   return result;
 };

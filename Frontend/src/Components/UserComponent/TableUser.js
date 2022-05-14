@@ -43,16 +43,12 @@ const TableUser = ({setdataToEdit,dataUsuarios,deleteData}) => {
     const handleUpdate = (data) => {
 
       const row = {
-        idUsuarios: data.idUsuarios,
+        idUsuario: data.idUsuario,
         idRol:  data.idRol,
-        codiPais:  data.CodiPais,
-        nombre:  data.nombre,
-        apellidos:  data.apellidos,
+        username:  data.username,
         email:  data.email,
         password: "",
         passwordConfirm: "",
-        genero:  data.genero,
-        celular:  data.celular,
       };
       
       
@@ -87,13 +83,9 @@ const TableUser = ({setdataToEdit,dataUsuarios,deleteData}) => {
                 <TableCell style={{ display: "none" }} align="center">
                   ID
                 </TableCell>
-                <TableCell align="center">Permiso</TableCell>
-                <TableCell align="center">Pais</TableCell>
-                <TableCell align="center">Nombre</TableCell>
-                <TableCell align="center">Apellido</TableCell>
+                <TableCell align="center">idRol</TableCell>
+                <TableCell align="center">UserName</TableCell>
                 <TableCell align="center">Email</TableCell>
-                <TableCell align="center">Genero</TableCell>
-                <TableCell align="center">Celular</TableCell>
                 <TableCell align="center">Actualizar</TableCell>
                 <TableCell align="center">Habilitado</TableCell>
               </TableRow>
@@ -101,16 +93,12 @@ const TableUser = ({setdataToEdit,dataUsuarios,deleteData}) => {
             <TableBody>
               {dataUsuarios &&
                 dataUsuarios.map((row) => (
-                  <TableRow key={row.idUsuarios}>
+                  <TableRow key={row.idUsuario}>
 
-                    <TableCell style={{ display: "none" }} align="center">{row.idUsuarios}</TableCell>
-                    <TableCell align="center">{row.NombreRol}</TableCell>
-                    <TableCell align="center">{row.nombrePais}</TableCell>
-                    <TableCell align="center">{row.nombre}</TableCell>
-                    <TableCell align="center">{row.apellidos}</TableCell>
+                    <TableCell style={{ display: "none" }} align="center">{row.idUsuario}</TableCell>
+                    <TableCell align="center">{row.idRol}</TableCell>
+                    <TableCell align="center">{row.username}</TableCell>
                     <TableCell align="center">{row.email}</TableCell>
-                    <TableCell align="center">{row.genero}</TableCell>
-                    <TableCell align="center">{row.celular}</TableCell>
                     <TableCell align="center">
                       <IconButton
                         aria-label="UpdateIcon"
@@ -126,7 +114,7 @@ const TableUser = ({setdataToEdit,dataUsuarios,deleteData}) => {
                       <TableCell align="center">
                         <IconButton
                           aria-label="delete"
-                          onClick={() => handleDialog("habilitar", row.idUsuarios)}
+                          onClick={() => handleDialog("habilitar", row.idUsuario)}
                         >
                           <ClearIcon
                             style={{ color: red[700] }}
@@ -138,7 +126,7 @@ const TableUser = ({setdataToEdit,dataUsuarios,deleteData}) => {
                       <TableCell align="center">
                         <IconButton
                           aria-label="delete"
-                          onClick={() => handleDialog("desabilitar", row.idUsuarios)}
+                          onClick={() => handleDialog("desabilitar", row.idUsuario)}
                         >
                           <CheckIcon
                             style={{ color: green[700] }}

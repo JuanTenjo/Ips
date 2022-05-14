@@ -37,68 +37,39 @@ const useStyle = makeStyles((theme) => ({
 
 //Inicial Form
 const initialForm = {
-  idUsuarios: null,
+  idUsuario: null,
   idRol: "",
-  codiPais: "",
-  nombre: "",
-  apellidos: "",
+  username: "",
   email: "",
   password: "",
   passwordConfirm: "",
-  genero: "",
-  celular: "",
 };
 
-const validationForm = (form) => {
+const validationForm = (form,dataToEdit) => {
   let error = {};
 
-  //let regexName = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/; //Validacion para nombre
-
-  //Trim se hace para bloquear que no se termine ni empiece con un caracter especial o un espacio en blanco
-  if (!form.nombre.trim()) {
-    error.nombre = "El campo nombre es requerido";
+  if (!form.username.trim()) {
+    error.username = "El campo Nombre de Usuario es requerido";
   }
-
-  if (!form.apellidos.trim()) {
-    error.apellidos = "El campo apellido es requerido";
-  }
-
-  if (form.idUsuarios === null) {
-
-    if (!form.password.trim()) {
-      error.password = "El campo password es requerido";
-    }else{  
-  
-        if(form.password !== form.passwordConfirm){
-          error.password = "El campo password y confirme password no son iguales";
-        }
-  
-    }
-    
-      if (!form.passwordConfirm.trim()) {
-        error.passwordConfirm = "Debes confirmar la password";
+if(!dataToEdit){
+  if (!form.password.trim()) {
+    error.password = "El campo password es requerido";
+  }else{  
+      if(form.password !== form.passwordConfirm){
+        error.password = "El campo password y confirme password no son iguales";
       }
-
   }
-
-
-
+    if (!form.passwordConfirm&&!form.passwordConfirm.trim()) {
+      error.passwordConfirm = "Debes confirmar la password";
+    }
+}
+  
   if (!form.email.trim()) {
     error.email = "El campo email es requerido";
   }
-  if (!form.genero.trim()) {
-    error.genero = "El campo genero es requerido";
-  }
-  if (!form.celular.trim()) {
-    error.celular = "El campo celular es requerido";
-  }
 
   if (form.idRol === "" || form.idRol === null) {
-    error.idRol = "El permiso del usuario es requerido";
-  }
-
-  if (form.codiPais === "" || form.codiPais === null) {
-    error.codiPais = "El codigo del pais es requerido";
+    error.idRol = "El rol es requerido";
   }
 
   return error;
@@ -109,7 +80,6 @@ const validationForm = (form) => {
 const FormUser = ({ dataToEdit, setDataToEdit, createData, updateData }) => {
   let classes = useStyle();
 
-  const [dataPaises, setDataPaises] = useState(null);
   const [dataRoles, setDataRoles] = useState(null);
 
   //Hood Personalizado para valizado
@@ -123,19 +93,11 @@ const FormUser = ({ dataToEdit, setDataToEdit, createData, updateData }) => {
 
 
   useEffect(() => {
-    const traerPais = async () => {
-      const data = await helpHttpAxios().get(`${API.URI}/country`);
-      setDataPaises(data);
-    };
-
     const traerRoles = async () => {
-      const data = await helpHttpAxios().get(
-        `${API.URI}/user/roles`
-      );
+      const data = await helpHttpAxios().get(`${API.URI}/roles/get_roles`);
       setDataRoles(data);
     };
 
-    traerPais();
     traerRoles();
   }, []);
 
@@ -159,14 +121,14 @@ const FormUser = ({ dataToEdit, setDataToEdit, createData, updateData }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(validationForm(form));
+    setError(validationForm(form,dataToEdit));
     if (Object.keys(error).length === 0) {
-      if (form.idUsuarios === null) {
+      if (form.idUsuario === null) {
         createData(form);
       } else {
         updateData(form);
       }
-
+      setForm(initialForm);
     }
   };
 
@@ -188,40 +150,8 @@ const FormUser = ({ dataToEdit, setDataToEdit, createData, updateData }) => {
               className={classes.formControl}
               size="small"
             >
-              <InputLabel htmlFor="outlined-age-native-simple">Pais</InputLabel>
-              <Select
-                required
-                native
-                value={form.codiPais}
-                onChange={handleChange}
-                label="Pais"
-                onBlur={handleBlur}
-                name="codiPais"
-              >
-                <option aria-label="None" value="" />
-                {dataPaises &&
-                  dataPaises.map((el) => {
-                    return (
-                      <option key={el.codiPais} value={el.codiPais}>
-                        {el.nombrePais}
-                      </option>
-                    );
-                  })}
-              </Select>
-            </FormControl>
-
-            {error.codiPais && (
-              <Alert severity="warning">{error.codiPais}</Alert>
-            )}
-          </Grid>
-          <Grid item xs={6}>
-            <FormControl
-              variant="outlined"
-              className={classes.formControl}
-              size="small"
-            >
               <InputLabel htmlFor="outlined-age-native-simple">
-                Permiso
+                Rol
               </InputLabel>
               <Select
                 required
@@ -237,7 +167,7 @@ const FormUser = ({ dataToEdit, setDataToEdit, createData, updateData }) => {
                   dataRoles.map((el) => {
                     return (
                       <option key={el.idRol} value={el.idRol}>
-                        {el.Nombre}
+                        {el.tipoRol}
                       </option>
                     );
                   })}
@@ -252,9 +182,9 @@ const FormUser = ({ dataToEdit, setDataToEdit, createData, updateData }) => {
             <TextField
               required
               type="text"
-              name="nombre"
-              label="Nombres"
-              value={form.nombre}
+              name="username"
+              label="Username"
+              value={form.username}
               onChange={handleChange}
               onBlur={handleBlur}
               className={classes.text}
@@ -262,25 +192,7 @@ const FormUser = ({ dataToEdit, setDataToEdit, createData, updateData }) => {
               size="small"
             />
 
-            {error.nombre && <Alert severity="warning">{error.nombre}</Alert>}
-          </Grid>
-          <Grid item xs={6} sm={6} md={3} lg={3} xl={3}>
-            <TextField
-              required
-              type="text"
-              name="apellidos"
-              label="Apellidos"
-              value={form.apellidos}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              className={classes.text}
-              variant="outlined"
-              size="small"
-            />
-
-            {error.apellidos && (
-              <Alert severity="warning">{error.apellidos}</Alert>
-            )}
+            {error.username && <Alert severity="warning">{error.username}</Alert>}
           </Grid>
           <Grid item xs={6} sm={6} md={3} lg={3} xl={3}>
             <TextField
@@ -297,22 +209,6 @@ const FormUser = ({ dataToEdit, setDataToEdit, createData, updateData }) => {
             />
 
             {error.email && <Alert severity="warning">{error.email}</Alert>}
-          </Grid>
-          <Grid item xs={6} sm={6} md={3} lg={3} xl={3}>
-            <TextField
-              required
-              type="number"
-              name="celular"
-              label="Celular"
-              value={form.celular}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              className={classes.text}
-              variant="outlined"
-              size="small"
-            />
-
-            {error.celular && <Alert severity="warning">{error.celular}</Alert>}
           </Grid>
         </Grid>
 
@@ -349,37 +245,6 @@ const FormUser = ({ dataToEdit, setDataToEdit, createData, updateData }) => {
               size="small"
             />
             {error.passwordConfirm && <Alert severity="warning">{error.passwordConfirm}</Alert>}
-          </Grid>
-        </Grid>
-
-        <Grid container justifyContent="center" spacing={1}>
-          <Grid item>
-            <div className={classes.formControl}>
-              <RadioGroup
-                required
-                row
-                aria-label="gender"
-                name="genero"
-                value={form.genero}
-                onBlur={handleBlur}
-                onChange={handleChange}
-              >
-                <FormControlLabel
-                  labelPlacement="start"
-                  value="Masculino"
-                  control={<Radio />}
-                  label="Masculino"
-                />
-                <FormControlLabel
-                  labelPlacement="start"
-                  value="Femenino"
-                  control={<Radio />}
-                  label="Femenino"
-                />
-              </RadioGroup>
-            </div>
-
-            {error.genero && <Alert severity="warning">{error.genero}</Alert>}
           </Grid>
         </Grid>
 

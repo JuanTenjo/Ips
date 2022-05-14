@@ -26,7 +26,7 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
-const RoutesLogged = ({ nombreUser, rolUser}) => {
+const RoutesLogged = ({ nombreUser, rolUser,tipoRol}) => {
 
   const classes = useStyle();
   const [abrir, setAbrir] = useState(false);
@@ -50,7 +50,7 @@ const RoutesLogged = ({ nombreUser, rolUser}) => {
         <>
           <NavBar accionAbrir={AccionAbrir} />
           <Hidden xsDown>
-            <Cajon variant="permanent" nombreUser={nombreUser} open={true} />
+            <Cajon variant="permanent" nombreUser={nombreUser} open={true} tipoRol={tipoRol} />
           </Hidden>
           <Hidden smUp>
             <Cajon variant="temporary" nombreUser={nombreUser} open={abrir} onClose={AccionAbrir} />
@@ -84,6 +84,7 @@ const Routes = () => {
 
   const [auth, setAuth] = useState(false);
   const [nombreUser, setNombreUser] = useState('');
+  const [tipoRol,setTipoRol]=useState('');
 
   useEffect(() => {
     AccionAuth();
@@ -108,7 +109,8 @@ const Routes = () => {
         const requestUser = await axios.get("http://localhost:4000/auth/getinfotoken", config);
         
         if(requestUser){
-          setNombreUser(requestUser.data[0].usuario)
+          setNombreUser(requestUser.data[0].usuario);
+          setTipoRol(requestUser.data[0].tipoRol);
           setAuth(token);
         }else{
           setAuth(false)
@@ -125,7 +127,7 @@ const Routes = () => {
 
   };
 
-  return <>{auth ? <RoutesLogged nombreUser={nombreUser} rolUser={3} /> : <PageLogin Auth={AccionAuth} />}</>;
+  return <>{auth ? <RoutesLogged nombreUser={nombreUser} rolUser={3} tipoRol={tipoRol} /> : <PageLogin Auth={AccionAuth} />}</>;
 
 };
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import { 
     List,
     ListItem,
@@ -13,7 +13,7 @@ import { withRouter } from "react-router-dom";
 const Listas = (props) => {
 
     const { history } = props;
-
+    const [itemsList,setItemList]= useState([])
         
     const Salir = () => {
       //Tumba la sesio por lo cual no tendra acceso a nada, con history.push modificamos la url para que quede limpia, y basta con solo
@@ -22,41 +22,54 @@ const Listas = (props) => {
       history.push("/")
       window.location.reload();
     }
+    const obtenerItemList = ()=>{
+      const {tipoRol}=props;
+      let itemsList = [
+        {
+          text: "Home",
+          icon: <HomeIcon />,
+          onClick: () => history.push("/"),
+          tipoRol:""
+        },
+        {
+          text: "Consultas",
+          icon: <PlaylistAddIcon />,
+          onClick: () => history.push("/gestionUser"),
+          tipoRol:"Admin,Medico,Especialista"
+        },
+        {
+          text: "Agregar Consulta",
+          icon: <PlaylistAddIcon />,
+          onClick: () => history.push("/gestionUser"),
+          tipoRol:"Admin,Auxiliar"
+        },
+        {
+          text: "Agregar Paciente",
+          icon: <PlaylistAddIcon />,
+          onClick: () => history.push("/gestionTeam"),
+          tipoRol:"Admin,Auxiliar"
+        },
+        {
+          text: "Usuarios",
+          icon: <PlaylistAddIcon />,
+          onClick: () => history.push("/gestionUser"),
+          tipoRol:"Admin"
+        },
+        {
+          text: "Salir",
+          icon: <ExitToAppIcon />,
+          onClick: () => Salir(),
+          tipoRol:""
+        }
+      ];
+      const filter=itemsList.filter((e)=>e.tipoRol.includes(tipoRol)||e.tipoRol=="");
+      setItemList(filter)
+    }
 
-    const itemsList = [
-      {
-        text: "Home",
-        icon: <HomeIcon />,
-        onClick: () => history.push("/") 
-      },
-      {
-        text: "Consultas",
-        icon: <PlaylistAddIcon />,
-        onClick: () => history.push("/gestionUser")
-      },
-      {
-        text: "Agregar Consulta",
-        icon: <PlaylistAddIcon />,
-        onClick: () => history.push("/gestionUser")
-      },
-      {
-        text: "Agregar Paciente",
-        icon: <PlaylistAddIcon />,
-        onClick: () => history.push("/gestionTeam")
-      },
-      {
-        text: "Usuarios",
-        icon: <PlaylistAddIcon />,
-        onClick: () => history.push("/gestionTeam")
-      },
-      {
-        text: "Salir",
-        icon: <ExitToAppIcon />,
-        onClick: () => Salir()
-      }
-    ];
-
-
+    useEffect(() => {
+      obtenerItemList()
+    }, [])
+    
     return ( 
         <div>
             <List component='nav'>
