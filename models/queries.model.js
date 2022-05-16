@@ -82,7 +82,7 @@ model.updateQueriesUser = async (params) => {
 model.queriesUsers = async (idUsuario) => {
     try {
 
-        let query = `select consulta.idTipo,consulta.idPaciente,consulta.idUsuario,consulta.idTipoformula,consulta.horaIngreso,consulta.horaSalida,consulta.peso,consulta.estatura,consulta.sintomas,consulta.descripcion,consulta.asistio,consulta.fechaconsulta,consulta.examen1,consulta.examen2,consulta.examen3 from consulta inner join tipoconsulta on consulta.idTipo = tipoconsulta.idTipoConsulta inner join tipoformula on consulta.idTipoformula = tipoformula.idTipoformula inner join paciente on consulta.idPaciente = paciente.idPaciente inner join usuario on consulta.idUsuario = usuario.idUsuario where consulta.idUsuario = '${idUsuario}'`;
+        let query = `select consulta.idConsulta,consulta.idTipo,consulta.idPaciente,consulta.idUsuario,consulta.idTipoformula,consulta.horaIngreso,consulta.horaSalida,consulta.peso,consulta.estatura,consulta.sintomas,consulta.descripcion,consulta.asistio,DATE_FORMAT(consulta.fechaconsulta, "%Y-%m-%d")  as fechaconsulta,consulta.examen1,consulta.examen2,consulta.examen3,tipoconsulta.*,tipoformula.*,paciente.*,usuario.* from consulta inner join tipoconsulta on consulta.idTipo = tipoconsulta.idTipoConsulta inner join tipoformula on consulta.idTipoformula = tipoformula.idTipoformula inner join paciente on consulta.idPaciente = paciente.idPaciente inner join usuario on consulta.idUsuario = usuario.idUsuario where consulta.idUsuario `;
 
         const Users = await pool.query(query);
 
@@ -108,6 +108,91 @@ model.showQueriesUsers = async (idConsulta) => {
         return {
             error: true,
             mensaje: [`Hubo un error al traer las consultas de usuario en el Model: queries.model, en la funcion: queriesUsers. ERROR: ${err.sqlMessage} `],
+            respuesta: false
+        };
+    }
+}
+model.getTipoConsulta = async () => {
+    try {
+
+        let query = `SELECT * FROM tipoconsulta`
+
+        const result = await pool.query(query);
+    
+        return result;
+
+    } catch (err) {
+        return {
+            error: true,
+            mensaje:[ `Hubo un error al traer los tipo consulta el Model: queries.model, en la funcion: getTipoConsulta. ERROR: ${err.sqlMessage} `],
+            respuesta: false
+        };
+    }
+}
+model.getPaciente = async () => {
+    try {
+
+        let query = `SELECT * FROM paciente`
+
+        const result = await pool.query(query);
+    
+        return result;
+
+    } catch (err) {
+        return {
+            error: true,
+            mensaje:[ `Hubo un error al traer los pacientes el Model: queries.model, en la funcion: getpaciente. ERROR: ${err.sqlMessage} `],
+            respuesta: false
+        };
+    }
+}
+model.getUsuario = async () => {
+    try {
+
+        let query = `SELECT usuario.idUsuario,usuario.idRol,usuario.username,usuario.email,usuario.password,rol.tipoRol FROM usuario inner join rol on usuario.idRol=rol.idRol`
+
+        const result = await pool.query(query);
+    
+        return result;
+
+    } catch (err) {
+        return {
+            error: true,
+            mensaje:[ `Hubo un error al traer los usuarios el Model: queries.model, en la funcion: getUsuario. ERROR: ${err.sqlMessage} `],
+            respuesta: false
+        };
+    }
+}
+model.getFormula = async () => {
+    try {
+
+        let query = `SELECT * FROM tipoformula`
+
+        const result = await pool.query(query);
+    
+        return result;
+
+    } catch (err) {
+        return {
+            error: true,
+            mensaje:[ `Hubo un error al traer los Formula el Model: queries.model, en la funcion: getFormula. ERROR: ${err.sqlMessage} `],
+            respuesta: false
+        };
+    }
+}
+model.getExamens = async () => {
+    try {
+
+        let query = `SELECT * FROM examen`
+
+        const result = await pool.query(query);
+    
+        return result;
+
+    } catch (err) {
+        return {
+            error: true,
+            mensaje:[ `Hubo un error al traer los examenes el Model: queries.model, en la funcion: getExamens. ERROR: ${err.sqlMessage} `],
             respuesta: false
         };
     }

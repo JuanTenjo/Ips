@@ -40,7 +40,7 @@ const Listas = (props) => {
         {
           text: "Agregar Consulta",
           icon: <PlaylistAddIcon />,
-          onClick: () => history.push("/gestionUser"),
+          onClick: () => history.push("/gestionConsulta"),
           tipoRol:"Admin,Auxiliar"
         },
         {
