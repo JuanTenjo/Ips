@@ -8,7 +8,7 @@ import axios from "axios";
 import Home from "../Pages/PageHome";
 import PageLogin from "../Pages/PageLogin";
 import PageUser from "../Pages/PageUser";
-import PageTeam from '../Pages/PageTeam'
+import PageConsulta from '../Pages/PageConsulta';
 import PageLeague from "../Pages/PageLeague";
 import PageCompetition from "../Pages/PageCompetition";
 import PagePais from "../Pages/PagePais";
@@ -56,7 +56,7 @@ const RoutesLogged = ({ nombreUser, rolUser,tipoRol}) => {
             <Cajon variant="temporary" nombreUser={nombreUser} open={abrir} onClose={AccionAbrir} />
           </Hidden>
           <Switch>
-          <Route exact path="/gestionTeam" component={PageTeam} />
+          <Route exact path="/gestionConsulta" component={PageConsulta} />
             <Route exact path="/gestionUser" component={PageUser} />
             {/*
               <Route exact path="/gestionParley" component={PageParley} />

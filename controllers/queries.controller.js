@@ -1,4 +1,4 @@
-const {showQueriesUsers,queriesUsers, updateQueriesUser, traerUltimoId, registrarPago, registerQueriesUser} = require('../models/queries.model')
+const {showQueriesUsers,queriesUsers, updateQueriesUser, traerUltimoId, registrarPago, registerQueriesUser,getTipoConsulta,getPaciente,getUsuario,getFormula,getExamens} = require('../models/queries.model')
 const {validarNulo, patternString} = require('../utils/validationPatters')
 
 
@@ -32,7 +32,7 @@ controller.registerQueriesUser = async function (req, res) {
     }else{
         const estado = await registerQueriesUser(params);
         if(estado.error || estado === false){
-            res.status(400).json({"message": estado.mensaje ? estado.mensaje : "No se registro la consulta del  usuario" });
+            res.status(400).json({"message": estado.mensaje ? estado.mensaje : "No se registro la consulta" });
             return;
         }
 
@@ -115,4 +115,49 @@ controller.showQueriesUsers = async function(req, res) {
 
 };
 
+controller.getTipoConsulta = async function(req, res) {
+    const estado = await getTipoConsulta();
+    if(estado.error || estado === false){
+        res.status(400).json(estado);
+    }else{
+
+        res.status(200).json(estado);
+    }    
+};
+controller.getPaciente = async function(req, res) {
+    const estado = await getPaciente();
+    if(estado.error || estado === false){
+        res.status(400).json(estado);
+    }else{
+
+        res.status(200).json(estado);
+    }    
+};
+controller.getUsuario = async function(req, res) {
+    const estado = await getUsuario();
+    if(estado.error || estado === false){
+        res.status(400).json(estado);
+    }else{
+
+        res.status(200).json(estado);
+    }    
+};
+controller.getFormula = async function(req, res) {
+    const estado = await getFormula();
+    if(estado.error || estado === false){
+        res.status(400).json(estado);
+    }else{
+
+        res.status(200).json(estado);
+    }    
+};
+controller.getExamens = async function(req, res){
+    const estado = await getExamens();
+    if(estado.error || estado === false){
+        res.status(400).json(estado);
+    }else{
+
+        res.status(200).json(estado);
+    }    
+}
 module.exports = controller;
