@@ -59,6 +59,7 @@ const TableConsulta = ({setdataToEdit,dataUsuarios,deleteData}) => {
         examen1: data.examen1,
         examen2: data.examen2,
         examen3: data.examen3,
+        valor: data.valor,
       };
       
       

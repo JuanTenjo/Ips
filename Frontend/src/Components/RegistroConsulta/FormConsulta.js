@@ -63,7 +63,7 @@ const initialForm = {
    examen1: "",
    examen2: "",
    examen3: "",
-
+   valor:"",
 };
 
 const validationForm = (form,dataToEdit) => {
@@ -81,6 +81,7 @@ const validationForm = (form,dataToEdit) => {
   if (!form.fechaconsulta.trim()) {
     error.fechaconsulta = "Debes ingresar la fecha de la competencia";
   }
+
   if (fechaconsulta < hoy) {
     error.fechaconsulta = "Debes seleccionar una fecha mayor a hoy";
   }
@@ -92,6 +93,10 @@ const validationForm = (form,dataToEdit) => {
   }
   if (!form.peso.trim()) {
     error.peso = "El campo peso de Usuario es requerido";
+  }
+
+  if (!form.valor  === "" || form.valor === null) {
+    error.valor = "El campo valor es requerido";
   }
   if (!form.estatura.trim()) {
     error.estatura = "El campo estatura es requerido";
@@ -122,7 +127,7 @@ const validationForm = (form,dataToEdit) => {
 
 const FormConsuta = ({ dataToEdit, setDataToEdit, createData, updateData }) => {
   let classes = useStyle();
- 
+  const [valor, setValor] = useState("");
   const [dataRoles, setDataTipoConsulta] = useState(null);
   const [dataPaciente, setDataPaciente] = useState(null);
   const [dataUsuario, setDataUsuario] = useState(null);
@@ -190,6 +195,9 @@ const FormConsuta = ({ dataToEdit, setDataToEdit, createData, updateData }) => {
     setDataToEdit(null);
   };
  
+  const handleInputChange = (event) => {  
+    setValor(event.target.value);
+  }
   return (
     <div>
       <Grid container justifyContent="center">
@@ -454,8 +462,7 @@ const FormConsuta = ({ dataToEdit, setDataToEdit, createData, updateData }) => {
           <FormControlLabel
             control={
               <Checkbox
-                checked={(form.asistio === 1 ? true: false)}
-                value={form.asistio}
+                checked={(Number(form.asistio) === 1 ? true : false)}
                 onChange={handleChangechecked}
                 name="asistio"
                 color="primary"
@@ -485,7 +492,7 @@ const FormConsuta = ({ dataToEdit, setDataToEdit, createData, updateData }) => {
         </Grid>
 
         <Grid container justifyContent="center" spacing={1}>
-          <Grid item xs={4}>
+          <Grid item xs={6}>
             <FormControl
               variant="outlined"
               className={classes.formControl}
@@ -515,7 +522,7 @@ const FormConsuta = ({ dataToEdit, setDataToEdit, createData, updateData }) => {
             </FormControl>
             {error.examen1 && <Alert severity="warning">{error.examen1}</Alert>}
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={6}>
             <FormControl
               variant="outlined"
               className={classes.formControl}
@@ -545,7 +552,9 @@ const FormConsuta = ({ dataToEdit, setDataToEdit, createData, updateData }) => {
             </FormControl>
             {error.examen2 && <Alert severity="warning">{error.examen2}</Alert>}
           </Grid>
-          <Grid item xs={4}>
+        </Grid>
+        <Grid container justifyContent="center" spacing={1}>
+        <Grid item xs={6}>
             <FormControl
               variant="outlined"
               className={classes.formControl}
@@ -575,8 +584,24 @@ const FormConsuta = ({ dataToEdit, setDataToEdit, createData, updateData }) => {
             </FormControl>
             {error.examen3 && <Alert severity="warning">{error.examen3}</Alert>}
           </Grid>
+          <Grid item xs={6}>
+            <TextField
+                required
+                type="text"
+                name="valor"
+                label="Valor $"
+                value={form.valor}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={classes.text}
+                variant="outlined"
+                size="small"
+              />
+                {error.valor && <Alert severity="warning">{error.valor}</Alert>}
+            </Grid>
+          
         </Grid>
-
+                  
         <Grid container justifyContent="center" spacing={1}>
           <Grid item xs={6}>
             <Button
