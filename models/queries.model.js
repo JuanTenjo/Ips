@@ -82,7 +82,7 @@ model.updateQueriesUser = async (params) => {
 model.queriesUsers = async (idUsuario) => {
     try {
 
-        let query = `select consulta.idConsulta,consulta.idTipo,consulta.idPaciente,consulta.idUsuario,consulta.idTipoformula,consulta.horaIngreso,consulta.horaSalida,consulta.peso,consulta.estatura,consulta.sintomas,consulta.descripcion,consulta.asistio,DATE_FORMAT(consulta.fechaconsulta, "%Y-%m-%d")  as fechaconsulta,consulta.examen1,consulta.examen2,consulta.examen3,tipoconsulta.*,tipoformula.*,paciente.*,usuario.* from consulta inner join tipoconsulta on consulta.idTipo = tipoconsulta.idTipoConsulta inner join tipoformula on consulta.idTipoformula = tipoformula.idTipoformula inner join paciente on consulta.idPaciente = paciente.idPaciente inner join usuario on consulta.idUsuario = usuario.idUsuario where consulta.idUsuario `;
+        let query = `select pago.valor,consulta.idConsulta,consulta.idTipo,consulta.idPaciente,consulta.idUsuario,consulta.idTipoformula,consulta.horaIngreso,consulta.horaSalida,consulta.peso,consulta.estatura,consulta.sintomas,consulta.descripcion,consulta.asistio,DATE_FORMAT(consulta.fechaconsulta, "%Y-%m-%d")  as fechaconsulta,consulta.examen1,consulta.examen2,consulta.examen3,tipoconsulta.*,tipoformula.*,paciente.*,usuario.* from consulta inner join tipoconsulta on consulta.idTipo = tipoconsulta.idTipoConsulta inner join tipoformula on consulta.idTipoformula = tipoformula.idTipoformula inner join paciente on consulta.idPaciente = paciente.idPaciente inner join usuario on consulta.idUsuario = usuario.idUsuario inner join pago on pago.idConsulta = consulta.idConsulta `;
 
         const Users = await pool.query(query);
 
