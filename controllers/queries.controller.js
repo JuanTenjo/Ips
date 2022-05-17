@@ -23,10 +23,11 @@ controller.registerQueriesUser = async function (req, res) {
     await validarNulo(params.asistio) ? ErroresValidacion.push(`La asistencia es requeridad`) : true;
     await validarNulo(params.fechaconsulta) ? ErroresValidacion.push(`La Fecha consulta es requerida`) : true;
     await validarNulo(params.valor) ? ErroresValidacion.push(`El valor de la consulta es requerida`) : true;
-    await params.examen1 ? ErroresValidacion.push(`La Fecha consulta es requeridad`) : true;
-    await params.examen2 ? ErroresValidacion.push(`La Fecha consulta es requeridad`) : true;
-    await params.examen3 ? ErroresValidacion.push(`La Fecha consulta es requeridad`) : true;
-
+    if(params.asistio == true){
+        params.asistio = 1;
+    }else{
+        params.asistio = 0;
+    }
     if (ErroresValidacion.length != 0){  
         res.status(400).json({"message": ErroresValidacion});
     }else{
@@ -73,10 +74,13 @@ controller.updateQueriesUser = async function(req, res) {
     await validarNulo(params.descripcion) ? ErroresValidacion.push(`La descripcion es requeridad`) : true;
     await validarNulo(params.asistio) ? ErroresValidacion.push(`La asistencia es requeridad`) : true;
     await validarNulo(params.fechaconsulta) ? ErroresValidacion.push(`La Fecha consulta es requeridad`) : true;
-    await params.examen1 ? ErroresValidacion.push(`La Fecha x es requeridad`) : true;
-    await params.examen2 ? ErroresValidacion.push(`La Fecha s es requeridad`) : true;
-    await params.examen3 ? ErroresValidacion.push(`La Fecha u es requeridad`) : true;
     await validarNulo(params.idConsulta) ? ErroresValidacion.push(`La Id consulta es requeridad`) : true;
+
+    if(params.asistio == true){
+        params.asistio = 1;
+    }else{
+        params.asistio = 0;
+    }
     if (ErroresValidacion.length != 0){
         res.status(400).json({"message": ErroresValidacion});
     }else{
