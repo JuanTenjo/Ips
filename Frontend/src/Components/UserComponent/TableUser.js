@@ -87,7 +87,6 @@ const TableUser = ({setdataToEdit,dataUsuarios,deleteData}) => {
                 <TableCell align="center">UserName</TableCell>
                 <TableCell align="center">Email</TableCell>
                 <TableCell align="center">Actualizar</TableCell>
-                <TableCell align="center">Habilitado</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -110,31 +109,6 @@ const TableUser = ({setdataToEdit,dataUsuarios,deleteData}) => {
                         />
                       </IconButton>
                     </TableCell>
-                    {row.habilitado === 0 ? (
-                      <TableCell align="center">
-                        <IconButton
-                          aria-label="delete"
-                          onClick={() => handleDialog("habilitar", row.idUsuario)}
-                        >
-                          <ClearIcon
-                            style={{ color: red[700] }}
-                            fontSize="small"
-                          />
-                        </IconButton>
-                      </TableCell>
-                    ) : (
-                      <TableCell align="center">
-                        <IconButton
-                          aria-label="delete"
-                          onClick={() => handleDialog("desabilitar", row.idUsuario)}
-                        >
-                          <CheckIcon
-                            style={{ color: green[700] }}
-                            fontSize="small"
-                          />
-                        </IconButton>
-                      </TableCell>
-                    )}
                   </TableRow>
                 ))}
             </TableBody>

@@ -100,7 +100,6 @@ const TablePasciente = ({setdataToEdit,dataUsuarios,deleteData}) => {
                 <TableCell align="center">apellido</TableCell>
                 <TableCell align="center">fechaNacimiento</TableCell>
                 <TableCell align="center">edad</TableCell>
-                <TableCell align="center">estado</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
