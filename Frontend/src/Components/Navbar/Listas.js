@@ -46,7 +46,7 @@ const Listas = (props) => {
         {
           text: "Agregar Paciente",
           icon: <PlaylistAddIcon />,
-          onClick: () => history.push("/gestionTeam"),
+          onClick: () => history.push("/gestionPasciente"),
           tipoRol:"Admin,Auxiliar"
         },
         {

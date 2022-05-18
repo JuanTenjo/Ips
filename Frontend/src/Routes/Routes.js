@@ -14,6 +14,7 @@ import PageCompetition from "../Pages/PageCompetition";
 import PagePais from "../Pages/PagePais";
 import PageParley from "../Pages/PageParley";
 import PageMembresias from "../Pages/PageMembresia";
+import PagePascientes from "../Pages/PagePascientes";
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -56,8 +57,9 @@ const RoutesLogged = ({ nombreUser, rolUser,tipoRol}) => {
             <Cajon variant="temporary" nombreUser={nombreUser} open={abrir} onClose={AccionAbrir} />
           </Hidden>
           <Switch>
+          <Route exact path="/gestionPasciente" component={PagePascientes} />
           <Route exact path="/gestionConsulta" component={PageConsulta} />
-            <Route exact path="/gestionUser" component={PageUser} />
+          <Route exact path="/gestionUser" component={PageUser} />
             {/*
               <Route exact path="/gestionParley" component={PageParley} />
               <Route exact path="/gestionPais" component={PagePais} />
