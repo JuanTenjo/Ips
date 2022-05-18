@@ -32,12 +32,6 @@ const Listas = (props) => {
           tipoRol:""
         },
         {
-          text: "Consultas",
-          icon: <PlaylistAddIcon />,
-          onClick: () => history.push("/gestionUser"),
-          tipoRol:"Admin,Medico,Especialista"
-        },
-        {
           text: "Agregar Consulta",
           icon: <PlaylistAddIcon />,
           onClick: () => history.push("/gestionConsulta"),
