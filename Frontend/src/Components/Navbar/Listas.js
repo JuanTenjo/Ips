@@ -32,22 +32,22 @@ const Listas = (props) => {
           tipoRol:""
         },
         {
+          text: "Usuarios",
+          icon: <PlaylistAddIcon />,
+          onClick: () => history.push("/gestionUser"),
+          tipoRol:"Admin"
+        },
+        {
           text: "Agregar Consulta",
           icon: <PlaylistAddIcon />,
           onClick: () => history.push("/gestionConsulta"),
-          tipoRol:"Admin,Auxiliar"
+          tipoRol:"Admin,Auxiliar,Medico,Especialista"
         },
         {
           text: "Agregar Paciente",
           icon: <PlaylistAddIcon />,
           onClick: () => history.push("/gestionPasciente"),
           tipoRol:"Admin,Auxiliar"
-        },
-        {
-          text: "Usuarios",
-          icon: <PlaylistAddIcon />,
-          onClick: () => history.push("/gestionUser"),
-          tipoRol:"Admin"
         },
         {
           text: "Salir",

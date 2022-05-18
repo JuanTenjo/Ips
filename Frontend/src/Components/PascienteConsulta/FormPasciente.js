@@ -193,7 +193,7 @@ const FormPasciente = ({ dataToEdit, setDataToEdit, createData, updateData }) =>
   return (
     <div>
       <Grid container justifyContent="center">
-        <h3>{dataToEdit ? "Actualizar pasciente" : "Registrar pasciente"}</h3>
+        <h3>{dataToEdit ? "Actualizar paciente" : "Registrar paciente"}</h3>
       </Grid>
       <form onSubmit={handleSubmit}>
       <Grid container justifyContent="center" spacing={1}>
