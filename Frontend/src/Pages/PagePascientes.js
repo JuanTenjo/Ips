@@ -40,7 +40,7 @@ const PagePascientes = () => {
   const createData = async (data) => {
     setLoading(true);
 
-    let URL = `${API.URI}/queries/register`;
+    let URL = `${API.URI}/paciente/register_paciente`;
 
     let config = {
       data: data,
@@ -69,13 +69,13 @@ const PagePascientes = () => {
   const updateData = async (data) => {
     setLoading(true);
 
-    let URL = `${API.URI}/queries/update`;
+    let URL = `${API.URI}/paciente/update_paciente`;
 
     let config = {
       data: data,
     };
 
-    const res = await helpHttpAxios().put(URL, config);
+    const res = await helpHttpAxios().post(URL, config);
 
     if (!res.err) {
       setResponse(res.message);
@@ -98,17 +98,18 @@ const PagePascientes = () => {
 
   };
 
-  const deleteData = async (idUsuarios) => {
+  const deleteData = async (idPaciente, estado) => {
 
     setLoading(true);
 
-    let URL = `${API.URI}/queries/delete`;
+    let URL = `${API.URI}/paciente/update_state_paciente`;
 
     let config = {
-      data: {'idUsuarios':idUsuarios},
+      data: {'idPaciente':idPaciente,'estado':estado},
     };
 
-    const res = await helpHttpAxios().del(URL, config);
+
+    const res = await helpHttpAxios().post(URL, config);
 
     if (!res.err) {
       setResponse(res.message);

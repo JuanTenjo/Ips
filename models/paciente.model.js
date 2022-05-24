@@ -60,7 +60,9 @@ model.updatePaciente = async (params) => {
 model.updateStatePaciente = async (params) => {
     try {
         const {idPaciente,estado}=params;
-        let query = `UPDATE paciente SET estado=${estado} WHERE idPaciente=${idPaciente}`
+
+        let query = `UPDATE paciente SET estado=${estado} WHERE paciente.idPaciente = ${idPaciente}`
+        console.log(query);
 
         const UpdateUser = await pool.query(query);
 
@@ -71,7 +73,7 @@ model.updateStatePaciente = async (params) => {
     } catch (err) {
         return {
             error: true,
-            mensaje: [`Hubo un error al actualizar el usuario en el Model: user.model, en la funcion: updateUser. ERROR: ${err.sqlMessage} `],
+            mensaje: [`Hubo un error al actualizar el usuario en el Model: paciente.model, en la funcion: updateStatePaciente. ERROR: ${err.sqlMessage} `],
             respuesta: false
         };
     }

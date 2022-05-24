@@ -43,25 +43,15 @@ const TablePasciente = ({setdataToEdit,dataUsuarios,deleteData}) => {
     const handleUpdate = (data) => {
 
       const row = {
-        idConsulta: data.idConsulta,
-        idTipo: data.idTipo,
         idPaciente: data.idPaciente,
-        idUsuario: data.idUsuario,
-        idTipoformula: data.idTipoformula,
-        horaIngreso: data.horaIngreso,
-        horaSalida: data.horaSalida,
-        peso: data.peso,
-        estatura: data.estatura,
-        sintomas: data.sintomas,
-        descripcion: data.descripcion,
-        asistio: (data.asistio === 0 ? false : true),
-        fechaconsulta: data.fechaconsulta,
-        examen1: data.examen1,
-        examen2: data.examen2,
-        examen3: data.examen3,
-        valor: data.valor,
+        tipoDocumento: data.tipoDocumento,
+        numeroDocumento: data.numeroDocumento,
+        nombre: data.nombre,
+        apellido: data.apellido,
+        fechaNacimiento: data.fechaNacimiento,
+        edad: data.edad,
+        estado: data.estado,
       };
-      
       
       setdataToEdit(row);
 
@@ -71,7 +61,7 @@ const TablePasciente = ({setdataToEdit,dataUsuarios,deleteData}) => {
     const handleDialog = (operacion, ID) => {
         setOpen(!open);
         SetInfoDialog({
-        tipo: "Pasciente",
+        tipo: "Paciente",
         funcion: deleteData,
         operacion,
         ID,
@@ -100,6 +90,8 @@ const TablePasciente = ({setdataToEdit,dataUsuarios,deleteData}) => {
                 <TableCell align="center">apellido</TableCell>
                 <TableCell align="center">fechaNacimiento</TableCell>
                 <TableCell align="center">edad</TableCell>
+                <TableCell align="center">Estado</TableCell>
+                <TableCell align="center">Actualizar</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -116,17 +108,22 @@ const TablePasciente = ({setdataToEdit,dataUsuarios,deleteData}) => {
                     <TableCell align="center">{row.edad}</TableCell>    
                     {row.estado === 0 ? (
                       <TableCell align="center">
-                        <IconButton
-                          aria-label="delete"
-                          onClick={() => handleDialog("habilitar", row.idPaciente)}
-                        >
-                          <ClearIcon
-                            style={{ color: red[700] }}
-                            fontSize="small"
-                          />
+                        <IconButton aria-label="delete" onClick={() => deleteData(row.idPaciente,1)}>
+                          <ClearIcon style={{ color: red[700] }} fontSize="small" />
                         </IconButton>
                       </TableCell>
-                    ) :null}
+                    ) :
+                      <TableCell align="center">
+                        <IconButton aria-label="updated" onClick={() => deleteData(row.idPaciente,0)}>
+                          <CheckIcon style={{ color: green[700] }} fontSize="small" />
+                        </IconButton>
+                      </TableCell>
+                    }
+                    <TableCell align="center">
+                        <IconButton aria-label="updated" onClick={() => handleUpdate(row)}>
+                          <UpdateIcon style={{ color: yellow[700] }} fontSize="small" />
+                        </IconButton>
+                      </TableCell>
                   </TableRow>
                 ))}
             </TableBody>

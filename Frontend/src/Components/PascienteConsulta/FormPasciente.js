@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Reactcheck from 'react';
 import { helpHttpAxios } from "../../Helpers/helpHttpsAxios";
 import UserForm from "../../Hooks/useForm";
 import Alert from "@material-ui/lab/Alert";
 import API from "../../Utils/dominioBackend";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import Checkbox from '@material-ui/core/Checkbox';
-import Typography from "@material-ui/core/Typography";
 import {
   Grid,
   TextField,
@@ -16,9 +11,6 @@ import {
   InputLabel,
   FormControl,
   Select,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
 } from "@material-ui/core";
 
 
@@ -47,14 +39,14 @@ const useStyle = makeStyles((theme) => ({
 
 //Inicial Form
 const initialForm = {
-   idPasciente: null,
+   idPaciente: null,
    tipoDocumento: "",
    numeroDocumento: "",
    nombre: "",
    apellido: "",
    fechaNacimiento: "",
-   edad: "0",
-   estado: true,
+   edad: "",
+   estado: 1,
 };
 
 const validationForm = (form,dataToEdit) => {
@@ -69,48 +61,26 @@ const validationForm = (form,dataToEdit) => {
   let fechaconsulta = new Date(form.fechaconsulta); 
   
   let error = {};
-//   if (!form.fechaconsulta.trim()) {
-//     error.fechaconsulta = "Debes ingresar la fecha de la competencia";
-//   }
 
-//   if (fechaconsulta < hoy) {
-//     error.fechaconsulta = "Debes seleccionar una fecha mayor a hoy";
-//   }
-//   if (!form.sintomas.trim()) {
-//     error.sintomas = "El campo sintomas de Usuario es requerido";
-//   }
-//   if (!form.descripcion.trim()) {
-//     error.descripcion = "El campo descripcion de Usuario es requerido";
-//   }
-//   if (!form.peso.trim()) {
-//     error.peso = "El campo peso de Usuario es requerido";
-//   }
+  if (!form.tipoDocumento.trim()) {
+    error.tipoDocumento = "Debes ingresar el tipo de documento";
+  }
+  if (!form.numeroDocumento.trim()) {
+    error.numeroDocumento = "Debes ingresar el numero de documento";
+  }
+  if (!form.nombre.trim()) {
+    error.nombre = "Debes ingresar el nombre";
+  }
+  if (!form.apellido.trim()) {
+    error.apellido = "Debes ingresar el apellido";
+  }
+  if (!form.fechaNacimiento.trim()) {
+    error.fechaNacimiento = "Debes ingresar la fecha de nacimiento";
+  }
 
-//   if (!form.valor  === "" || form.valor === null) {
-//     error.valor = "El campo valor es requerido";
-//   }
-//   if (!form.estatura.trim()) {
-//     error.estatura = "El campo estatura es requerido";
-//   }
-//   if (form.idUsuario === "" || form.idUsuario === null) {
-//     error.idUsuario = "El Usuario es requerido";
-//   }
-//   if (form.idTipo === "" || form.idTipo === null) {
-//     error.idTipo = "El Tipo consulta es requerido";
-//   }
-//   if (form.idPaciente === "" || form.idPaciente === null) {
-//     error.idPaciente = "El Paciente es requerido";
-//   }
-//   if (form.idTipoformula === "" || form.idTipoformula === null) {
-//     error.idTipoformula = "Tipo formula es requerido";
-//   }
-//   if (!form.horaIngreso.trim()) {
-//     error.horaIngreso = "Debes ingresar la hora de la ingreso";
-//   }
-//   if (!form.horaSalida.trim()) {
-//     error.horaSalida = "Debes ingresar la hora de la salida";
-//   }
-
+  if (!form.edad.trim()) {
+    error.edad = "Debes ingresar la edad del pasciente";
+  }
   return error;
 };
 
@@ -135,28 +105,7 @@ const FormPasciente = ({ dataToEdit, setDataToEdit, createData, updateData }) =>
       const data = await helpHttpAxios().get(`${API.URI}/queries/get_tipo_consulta`);
       setDataTipoConsulta(data);
     };
-
-    const traerPaciente = async () => {
-        const data = await helpHttpAxios().get(`${API.URI}/queries/get_paciente`);
-        setDataPaciente(data);
-    };
-    const traerUsuarios = async () => {
-        const data = await helpHttpAxios().get(`${API.URI}/queries/get_usuario`);
-        setDataUsuario(data);
-    };
-    const traerFormular = async () => {
-        const data = await helpHttpAxios().get(`${API.URI}/queries/get_formula`);
-        setDataFormula(data);
-    };
-    const traerExamen = async () => {
-      const data = await helpHttpAxios().get(`${API.URI}/queries/get_examen`);
-      setDataExamen(data);
-    };
     traerTipoConsulta();
-    traerPaciente();
-    traerUsuarios();
-    traerFormular();
-    traerExamen();
   }, []);
 
   useEffect(() => {
@@ -173,8 +122,8 @@ const FormPasciente = ({ dataToEdit, setDataToEdit, createData, updateData }) =>
     e.preventDefault();
     setError(validationForm(form,dataToEdit));
     if (Object.keys(error).length === 0) {
-      if (form.idPaciente  === null) {
-        createData(form);
+      if (form.idPaciente  === null) { 
+         createData(form);
       } else {
         updateData(form);
       }
@@ -190,13 +139,14 @@ const FormPasciente = ({ dataToEdit, setDataToEdit, createData, updateData }) =>
   const handleInputChange = (event) => {  
     setValor(event.target.value);
   }
+
   return (
     <div>
       <Grid container justifyContent="center">
         <h3>{dataToEdit ? "Actualizar paciente" : "Registrar paciente"}</h3>
       </Grid>
       <form onSubmit={handleSubmit}>
-      <Grid container justifyContent="center" spacing={1}>
+        <Grid container justifyContent="center" spacing={1}>
           <Grid item xs={6}>
             <FormControl
               variant="outlined"
@@ -211,22 +161,17 @@ const FormPasciente = ({ dataToEdit, setDataToEdit, createData, updateData }) =>
                 native
                 value={form.tipoDocumento}
                 onChange={handleChange}
-                label="Permiso"
+                label="Tipo Documento"
                 onBlur={handleBlur}
-                name="idTipo"
+                name="tipoDocumento"
               >
                 <option aria-label="None" value="" />
-                {dataRoles &&
-                  dataRoles.map((el) => {
-                    return (
-                      <option key={el.idTipoConsulta} value={el.idTipoConsulta}>
-                          {el.consulta}
-                      </option>
-                    );
-                  })}
+                <option value="CC">CC</option>
+                <option value="TI">TI</option>
+                <option value="PS">PS</option>
               </Select>
             </FormControl>
-            {error.idTipo && <Alert severity="warning">{error.idTipo}</Alert>}
+            {error.tipoDocumento && <Alert severity="warning">{error.tipoDocumento}</Alert>}
           </Grid>
 
           <Grid item xs={6}>
@@ -234,6 +179,7 @@ const FormPasciente = ({ dataToEdit, setDataToEdit, createData, updateData }) =>
                 required={true}
                 name="numeroDocumento"
                 label="Numero De Documento"
+                onBlur={handleBlur}
                 onChange={handleChange}
                 type="number"
                 value={form.numeroDocumento}
@@ -253,8 +199,9 @@ const FormPasciente = ({ dataToEdit, setDataToEdit, createData, updateData }) =>
                 name="nombre"
                 label="Nombre"
                 onChange={handleChange}
+                onBlur={handleBlur}
                 type="text"
-                value={form.numeroDocumento}
+                value={form.nombre}
                 className={classes.text}
                 InputLabelProps={{
                 shrink: true,
@@ -263,7 +210,7 @@ const FormPasciente = ({ dataToEdit, setDataToEdit, createData, updateData }) =>
                 step: 300, // 5 min
                 }}
                 />
-            {error.numeroDocumento && <Alert severity="warning">{error.numeroDocumento}</Alert>}
+            {error.nombre && <Alert severity="warning">{error.nombre}</Alert>}
           </Grid>
           <Grid item xs={6}>
             <TextField
@@ -272,7 +219,8 @@ const FormPasciente = ({ dataToEdit, setDataToEdit, createData, updateData }) =>
                 label="Apellido"
                 onChange={handleChange}
                 type="text"
-                value={form.numeroDocumento}
+                onBlur={handleBlur}
+                value={form.apellido}
                 className={classes.text}
                 InputLabelProps={{
                 shrink: true,
@@ -281,7 +229,7 @@ const FormPasciente = ({ dataToEdit, setDataToEdit, createData, updateData }) =>
                 step: 300, // 5 min
                 }}
                 />
-            {error.numeroDocumento && <Alert severity="warning">{error.numeroDocumento}</Alert>}
+            {error.apellido && <Alert severity="warning">{error.apellido}</Alert>}
           </Grid>
         </Grid>
         <Grid container justifyContent="center" spacing={1}>
@@ -291,26 +239,22 @@ const FormPasciente = ({ dataToEdit, setDataToEdit, createData, updateData }) =>
                 name="fechaNacimiento"
                 label="Fecha de nacimiento"
                 onChange={handleChange}
+                onBlur={handleBlur}
                 type="date"
-                value={form.numeroDocumento}
+                value={form.fechaNacimiento}
                 className={classes.text}
-                InputLabelProps={{
-                shrink: true,
-                }}
-                inputProps={{
-                step: 300, // 5 min
-                }}
                 />
-            {error.numeroDocumento && <Alert severity="warning">{error.numeroDocumento}</Alert>}
+            {error.fechaNacimiento && <Alert severity="warning">{error.fechaNacimiento}</Alert>}
           </Grid>
           <Grid item xs={6}>
-            <TextField
+          <TextField
                 required={true}
                 name="edad"
                 label="Edad"
+                onBlur={handleBlur}
                 onChange={handleChange}
-                type="text"
-                value={form.numeroDocumento}
+                type="number"
+                value={form.edad}
                 className={classes.text}
                 InputLabelProps={{
                 shrink: true,
@@ -319,7 +263,17 @@ const FormPasciente = ({ dataToEdit, setDataToEdit, createData, updateData }) =>
                 step: 300, // 5 min
                 }}
                 />
-            {error.numeroDocumento && <Alert severity="warning">{error.numeroDocumento}</Alert>}
+            {error.edad && <Alert severity="warning">{error.edad}</Alert>}
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              variant="outlined"
+              type="submit"
+              color="primary"
+              className={classes.boton}
+            >
+              Guardar
+            </Button>
           </Grid>
         </Grid>
 

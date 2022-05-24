@@ -8,8 +8,11 @@ controller.registerPaciente = async function (req, res) {
 
         const params = req.body;  
         const ErroresValidacion = [];
+
         for (const e of Object.keys(params)) {
-            await validarNulo(params[e]) ?  ErroresValidacion.push(`El campo ${e} no puede estar vacio`) : true;      
+            if(e != "idPaciente"){
+                await validarNulo(params[e]) ?  ErroresValidacion.push(`El campo ${e} no puede estar vacio`) : true;    
+            }  
         }
     
         if (ErroresValidacion.length != 0){    
